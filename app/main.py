@@ -44,7 +44,7 @@ app.include_router(votes.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello what"}
+    return {"message": "Hello what!"}
 
 
 # uvicorn app.main:app --reload
