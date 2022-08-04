@@ -45,7 +45,7 @@ async def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db),
     return new_post
 
 
-@router.get('/{id}', response_model=schemas.PostOut)
+@router.get('/{id}', response_model=schemas.PostOut, )
 async def get_single_post(id: int, response: Response, db: Session = Depends(get_db)):
     post = db.query(models.Post, func.count(models.Vote.user_id).label('votes')).join(
         models.Vote, models.Post.id == models.Vote.post_id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
@@ -56,7 +56,7 @@ async def get_single_post(id: int, response: Response, db: Session = Depends(get
     return post
 
 
-@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT, )
 async def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     post = db.query(models.Post).filter(models.Post.id == id)
     # cursor.execute('DELETE FROM posts WHERE %s = id RETURNING *', (id,))
